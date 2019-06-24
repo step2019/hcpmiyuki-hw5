@@ -21,8 +21,19 @@ def root():
 # /pata のリクエスト（例えば http://localhost:8080/pata ）をこの関数で処理する。
 # これをパタトクカシーーを処理するようにしています。
 def pata():
-  # とりあえずAとBをつなぐだけで返事を作っていますけど、パタタコカシーーになるように自分で直してください！
-  pata = request.args.get('a', '') + request.args.get('b', '')
+  # とりあえずAとaをつなぐだけで返事を作っていますけど、パタタコカシーーになるように自分で直してください！
+  a_string_list = list(request.args.get('a', ''))
+  b_string_list = list(request.args.get('b', ''))
+
+  if len(a_string_list) <= len(b_string_list):
+      for i in range(len(a_string_list)):
+          b_string_list.insert(i*2,a_string_list[i])
+          pata = "".join(b_string_list)
+  else:
+      for i in range(len(b_string_list)):
+          a_string_list.insert(i*2+1,b_string_list[i])
+          pata = "".join(a_string_list)
+
   # pata.htmlのテンプレートの内容を埋め込んで、返事を返す。
   return render_template('pata.html', pata=pata)
 
