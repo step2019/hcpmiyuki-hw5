@@ -1,18 +1,42 @@
 <html>
-  <head><title>JSONを読み込む例</title></head>
-  <body>
-    路線：
-    <ul>
-      {% for line in network %}
-      <li> {{line.Name}}
-        <ul>
-          {% for station in line["Stations"] %}
-          <li> {{station}} </li>
-          {% endfor %}
-        </ul> 
-      </li>
-      {% endfor %}
-    </ul>
-  </body>
+<head>
+    <title>乗り換え案内</title>
+</head>
+<body>
+    <div id="app">
+        <h1>乗り換え案内</h1>
+        <form action="/search" method="post">
+            <div class = "selectStation">
+                <label>出発駅</label>
+                <select name = "from_station">
+                    {% for station in stations %}
+                    <option>{{ station }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class = "selectStation">
+                <label>到着駅</label>
+                <select name = "to_station">
+                    {% for station in stations %}
+                    <option>{{ station }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <input type = "submit" value = "検索">
+        </form>
+    </div>
+<style>
+li{
+    list-style: none;
+}
+#app{
+
+    text-align: center;
+}
+.selectStation{
+    margin-bottom: 2.7rem;
+}
+</style>
+</body>
 </html>
-  

@@ -24,7 +24,7 @@ def pata():
   # とりあえずAとaをつなぐだけで返事を作っていますけど、パタタコカシーーになるように自分で直してください！
   a_string_list = list(request.args.get('a', ''))
   b_string_list = list(request.args.get('b', ''))
-
+  pata = ""
   if len(a_string_list) <= len(b_string_list):
       for i in range(len(a_string_list)):
           b_string_list.insert(i*2,a_string_list[i])
@@ -40,5 +40,17 @@ def pata():
 @app.route('/norikae')
 # /norikae のリクエスト（例えば http://localhost:8080/norikae ）をこの関数で処理する。
 # ここで乗り換え案内をするように編集してください。
-def norikae(self):
-  return render_template('norikae.html', network=network)
+def norikae():
+  station_list = []
+  for line in network:
+      for station in line["Stations"]:
+          station_list.append(station)
+  setted_station_list = list(set(station_list))
+  return render_template('norikae.html', stations=setted_station_list)
+
+@app.route('/search', methods=['POST'])
+def search():
+  if request.method == 'POST':
+    from_station = request.form['from_station']
+    to_station = request.form['to_station']
+  return render_template('norikae_result.html', from_station=from_station, to_station=to_station)
