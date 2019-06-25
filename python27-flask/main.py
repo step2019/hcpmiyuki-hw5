@@ -46,9 +46,9 @@ def norikae():
   for line in network:
       for station in line["Stations"]:
           station_list.append(station)
-  setted_station_list = list(set(station_list))
+  set_station_list = list(set(station_list))
 
-  return render_template('norikae.html', stations=setted_station_list)
+  return render_template('norikae.html', stations=set_station_list)
 
 @app.route('/search', methods=['POST'])
 def search():
