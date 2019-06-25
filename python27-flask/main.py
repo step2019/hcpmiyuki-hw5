@@ -3,6 +3,7 @@
 
 from google.appengine.api import urlfetch
 import json
+from search_norikae import *
 from flask import Flask, render_template, request
 
 app = Flask(__name__)
@@ -46,6 +47,7 @@ def norikae():
       for station in line["Stations"]:
           station_list.append(station)
   setted_station_list = list(set(station_list))
+
   return render_template('norikae.html', stations=setted_station_list)
 
 @app.route('/search', methods=['POST'])
@@ -53,4 +55,5 @@ def search():
   if request.method == 'POST':
     from_station = request.form['from_station']
     to_station = request.form['to_station']
-  return render_template('norikae_result.html', from_station=from_station, to_station=to_station)
+    norikae_route = search_norikae(from_station, to_station)
+  return render_template('norikae_result.html', norikae_route=norikae_route)
