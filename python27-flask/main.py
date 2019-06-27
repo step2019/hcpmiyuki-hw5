@@ -42,7 +42,6 @@ def pata():
 # /norikae のリクエスト（例えば http://localhost:8080/norikae ）をこの関数で処理する。
 # ここで乗り換え案内をするように編集してください。
 def norikae():
-<<<<<<< HEAD
   station_list = []
   for line in network:
       for station in line["Stations"]:
@@ -58,6 +57,3 @@ def search():
     to_station = request.form['to_station']
     norikae_route = search_norikae(from_station, to_station)
   return render_template('norikae_result.html', norikae_route=norikae_route)
-=======
-  return render_template('norikae.html', network=network)
->>>>>>> 69a73e7bc83330cd2a66ced6631226328236e37a
