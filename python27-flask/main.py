@@ -9,7 +9,7 @@ from flask import Flask, render_template, request
 app = Flask(__name__)
 app.debug = True
 
-networkJson = urlfetch.fetch("https://tokyo.fantasy-transit.appspot.com/net?format=json").content  # ウェブサイトから電車の線路情報をJSON形式でダウンロードする
+networkJson = urlfetch.fetch("http://tokyo.fantasy-transit.appspot.com/net?format=json").content  # ウェブサイトから電車の線路情報をJSON形式でダウンロードする
 network = json.loads(networkJson.decode('utf-8'))  # JSONとしてパースする（stringからdictのlistに変換する）
 
 @app.route('/')
@@ -42,6 +42,7 @@ def pata():
 # /norikae のリクエスト（例えば http://localhost:8080/norikae ）をこの関数で処理する。
 # ここで乗り換え案内をするように編集してください。
 def norikae():
+<<<<<<< HEAD
   station_list = []
   for line in network:
       for station in line["Stations"]:
@@ -57,3 +58,6 @@ def search():
     to_station = request.form['to_station']
     norikae_route = search_norikae(from_station, to_station)
   return render_template('norikae_result.html', norikae_route=norikae_route)
+=======
+  return render_template('norikae.html', network=network)
+>>>>>>> 69a73e7bc83330cd2a66ced6631226328236e37a
