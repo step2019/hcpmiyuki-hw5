@@ -4,8 +4,13 @@
 import pickle
 from collections import deque
 import logging
+from google.appengine.api import urlfetch
+import json
+from make_graph import *
 
-station_graph = pickle.load(open("station_graph.pickle", "rb"))
+networkJson = urlfetch.fetch("http://tokyo.fantasy-transit.appspot.com/net?format=json").content  # ウェブサイトから電車の線路情報をJSON形式でダウンロードする
+network = json.loads(networkJson.decode('utf-8'))  # JSONとしてパースする（stringから
+station_graph = make_station_graph(make_station_name_list(network), network)
 
 def memorize(memo, pointed):
     for station_dic in station_graph[pointed["name"]]:
@@ -20,7 +25,7 @@ def search_norikae(from_station, to_station):
     logging.info("station graph contains: %s" % " ".join(sorted(station_graph.keys())))
     logging.info("contains from (%s)? %s" % (from_station, from_station in station_graph))
     logging.info("contains to (%s)? %s" % (to_station, to_station in station_graph))
-    logging.info("contains 東京? %s" % ("東京" in station_graph))
+    logging.info(u"contains 東京? %s" % (u"東京" in station_graph))
     search_deque += station_graph[from_station]
     searched = []
     memo = {}
