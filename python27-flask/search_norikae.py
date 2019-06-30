@@ -15,7 +15,9 @@ station_graph = make_station_graph(make_station_name_list(network), network)
 def memorize(memo, pointed):
     for station_dic in station_graph[pointed["name"]]:
         if not station_dic["name"] in memo:
-            memo[station_dic["name"]] = memo[pointed["name"]] + [pointed]
+          logging.info("add to memo: memo[%s] = memo[%s] + [%s]" % (station_dic["name"], pointed["name"], pointed))
+          logging.info("memo contains: %s" % (" ".join(memo.keys())))
+          memo[station_dic["name"]] = memo[pointed["name"]] + [pointed]
     return memo
 
 
